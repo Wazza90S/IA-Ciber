@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reportes</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 50px;
+            background-color: #f4f4f4;
+        }
+        h1 {
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        label, select, input, button {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            font-size: 16px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .navbar {
+            display: flex;
+            justify-content: space-around;
+            background-color: #333;
+            padding: 14px 0;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            padding: 14px 20px;
+            text-align: center;
+            font-size: 18px;
+            transition: background-color 0.3s;
+        }
+        .navbar a:hover {
+            background-color: #575757;
+            border-radius: 4px;
+        }
+        footer {
+            margin-top: 30px;
+            text-align: center;
+            padding: 20px;
+            background-color: #333;
+            color: white;
+            border-radius: 8px;
+        }
+        footer img {
+            width: 24px;
+            height: 24px;
+            margin-right: 15px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="navbar">
+    <a href="#analisis-dominio">Análisis de dominio</a>
+    <a href="#analisis-vulnerabilidades">Análisis de vulnerabilidades</a>
+    <a href="#reportes">Reportes</a>
+    <a href="#roles">Roles</a>
+    <a href="#cvs">CVS's</a>
+</div>
+
+<div class="container">
+    <h1>Reportes de Vulnerabilidades</h1>
+    
+    <!-- Filtros -->
+    <label for="filterDate">Filtrar por fecha:</label>
+    <input type="date" id="filterDate">
+
+    <label for="filterDomain">Filtrar por dominio:</label>
+    <input type="text" id="filterDomain" placeholder="Ingresa el dominio">
+
+    <label for="filterSeverity">Filtrar por criticidad:</label>
+    <select id="filterSeverity">
+        <option value="">Seleccionar criticidad</option>
+        <option value="Alta">Alta</option>
+        <option value="Media">Media</option>
+        <option value="Baja">Baja</option>
+    </select>
+
+    <button id="filterButton">Aplicar filtros</button>
+
+    <!-- Tabla de resultados -->
+    <table id="reportTable">
+        <thead>
+            <tr>
+                <th>Fecha identificación</th>
+                <th>Dominio</th>
+                <th>Vulnerabilidad</th>
+                <th>Criticidad</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Aquí se llenarán los reportes -->
+        </tbody>
+    </table>
+</div>
+
+<footer>
+    <p>Desarrollada por Ranma Saotome</p>
+    <a href="https://www.instagram.com" target="_blank">
+        <img src="/img/instagram.ico" alt="Instagram">
+    </a>
+    <a href="https://www.x.com" target="_blank">
+        <img src="/img/x.ico" alt="X">
+    </a>
+</footer>
+
+<script>
+    // Datos de ejemplo para la tabla
+    const reports = [
+        { date: '2024-09-15', domain: 'example.com', vulnerability: 'SQL Injection', severity: 'Alta' },
+        { date: '2024-08-20', domain: 'test.com', vulnerability: 'Cross-Site Scripting', severity: 'Media' },
+        { date: '2024-07-30', domain: 'example.org', vulnerability: 'Directory Traversal', severity: 'Baja' },
+        { date: '2024-09-10', domain: 'testsite.com', vulnerability: 'Remote Code Execution', severity: 'Alta' }
+    ];
+
+    // Función para renderizar la tabla
+    function renderTable(filteredReports) {
+        const tableBody = document.querySelector('#reportTable tbody');
+        tableBody.innerHTML = ''; // Limpiar tabla
+
+        filteredReports.forEach(report => {
+            const row = `<tr>
+                <td>${report.date}</td>
+                <td>${report.domain}</td>
+                <td>${report.vulnerability}</td>
+                <td>${report.severity}</td>
+            </tr>`;
+            tableBody.innerHTML += row;
+        });
+    }
+
+    // Renderizar la tabla con todos los reportes al inicio
+    renderTable(reports);
+
+    // Función para filtrar los reportes
+    document.getElementById('filterButton').addEventListener('click', function() {
+        const filterDate = document.getElementById('filterDate').value;
+        const filterDomain = document.getElementById('filterDomain').value.toLowerCase();
+        const filterSeverity = document.getElementById('filterSeverity').value;
+
+        const filteredReports = reports.filter(report => {
+            const matchDate = !filterDate || report.date === filterDate;
+            const matchDomain = !filterDomain || report.domain.toLowerCase().includes(filterDomain);
+            const matchSeverity = !filterSeverity || report.severity === filterSeverity;
+            return matchDate && matchDomain && matchSeverity;
+        });
+
+        renderTable(filteredReports);
+    });
+</script>
+
+</body>
+</html>

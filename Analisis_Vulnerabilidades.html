@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Análisis de vulnerabilidades</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 50px;
+            background-color: #f4f4f4;
+        }
+        h1 {
+            color: #333;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        input[type="file"], button {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            font-size: 16px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .response-box {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            min-height: 100px;
+        }
+        .navbar {
+            display: flex;
+            justify-content: space-around;
+            background-color: #333;
+            padding: 14px 0;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            padding: 14px 20px;
+            text-align: center;
+            font-size: 18px;
+            transition: background-color 0.3s;
+        }
+        .navbar a:hover {
+            background-color: #575757;
+            border-radius: 4px;
+        }
+        footer {
+            margin-top: 30px;
+            text-align: center;
+            padding: 20px;
+            background-color: #333;
+            color: white;
+            border-radius: 8px;
+        }
+        footer img {
+            width: 24px;
+            height: 24px;
+            margin-right: 15px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="navbar">
+    <a href="#analisis-dominio">Análisis de dominio</a>
+    <a href="#analisis-vulnerabilidades">Análisis de vulnerabilidades</a>
+    <a href="#reportes">Reportes</a>
+    <a href="#roles">Roles</a>
+    <a href="#cvs">CVS's</a>
+</div>
+
+<div class="container">
+    <h1>Análisis de vulnerabilidades</h1>
+    <input type="file" id="fileInput" accept=".csv">
+    <button id="analyzeButton">Subir archivo y analizar</button>
+
+    <div class="response-box" id="responseBox">
+        Los resultados aparecerán aquí...
+    </div>
+</div>
+
+<footer>
+    <p>Desarrollada por Ranma Saotome</p>
+    <a href="https://www.instagram.com" target="_blank">
+        <img src="/img/instagram.ico" alt="Instagram">
+    </a>
+    <a href="https://www.x.com" target="_blank">
+        <img src="/img/x.ico" alt="X">
+    </a>
+</footer>
+
+<script>
+    document.getElementById('analyzeButton').addEventListener('click', function() {
+        const fileInput = document.getElementById('fileInput');
+        const responseBox = document.getElementById('responseBox');
+        const file = fileInput.files[0];
+
+        if (!file) {
+            responseBox.innerHTML = "Por favor, sube un archivo.";
+            return;
+        }
+
+        // Validar que el archivo sea .csv
+        const fileExtension = file.name.split('.').pop().toLowerCase();
+        if (fileExtension !== 'csv') {
+            responseBox.innerHTML = "Por favor, sube un archivo con formato .csv.";
+            return;
+        }
+
+        // Si el archivo es válido, simular análisis
+        responseBox.innerHTML = "Análisis en progreso...";
+
+        // Simular análisis (esto sería reemplazado con lógica de procesamiento real)
+        setTimeout(function() {
+            responseBox.innerHTML = "El análisis del archivo CSV ha sido completado.";
+        }, 2000); // Simula una demora de 2 segundos para el análisis
+    });
+</script>
+
+</body>
+</html>

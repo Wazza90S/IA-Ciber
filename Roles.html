@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Roles</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 50px;
+            background-color: #f4f4f4;
+        }
+        h1 {
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        input, button, select {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            font-size: 16px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+        .navbar {
+            display: flex;
+            justify-content: space-around;
+            background-color: #333;
+            padding: 14px 0;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            padding: 14px 20px;
+            text-align: center;
+            font-size: 18px;
+            transition: background-color 0.3s;
+        }
+        .navbar a:hover {
+            background-color: #575757;
+            border-radius: 4px;
+        }
+        footer {
+            margin-top: 30px;
+            text-align: center;
+            padding: 20px;
+            background-color: #333;
+            color: white;
+            border-radius: 8px;
+        }
+        footer img {
+            width: 24px;
+            height: 24px;
+            margin-right: 15px;
+        }
+        .action-btn {
+            background-color: #ff9800;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            cursor: pointer;
+        }
+        .delete-btn {
+            background-color: #f44336;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<div class="navbar">
+    <a href="#analisis-dominio">Análisis de dominio</a>
+    <a href="#analisis-vulnerabilidades">Análisis de vulnerabilidades</a>
+    <a href="#reportes">Reportes</a>
+    <a href="#roles">Roles</a>
+    <a href="#cvs">CVS's</a>
+</div>
+
+<div class="container">
+    <h1>Gestión de Roles</h1>
+
+    <!-- Formulario para agregar un nuevo rol -->
+    <label for="newRole">Agregar nuevo rol:</label>
+    <input type="text" id="newRole" placeholder="Escribe el nombre del rol">
+    <button id="addRoleButton">Agregar rol</button>
+
+    <!-- Tabla de roles -->
+    <table id="rolesTable">
+        <thead>
+            <tr>
+                <th>Rol</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Aquí se cargarán los roles -->
+        </tbody>
+    </table>
+</div>
+
+<footer>
+    <p>Desarrollada por Ranma Saotome</p>
+    <a href="https://www.instagram.com" target="_blank">
+        <img src="/img/instagram.ico" alt="Instagram">
+    </a>
+    <a href="https://www.x.com" target="_blank">
+        <img src="/img/x.ico" alt="X">
+    </a>
+</footer>
+
+<script>
+    // Datos iniciales de roles
+    let roles = ['Admin', 'Desarrollador', 'Visor', 'No técnico'];
+
+    // Función para renderizar la tabla de roles
+    function renderRolesTable() {
+        const tableBody = document.querySelector('#rolesTable tbody');
+        tableBody.innerHTML = ''; // Limpiar la tabla
+
+        roles.forEach((role, index) => {
+            const row = `<tr>
+                <td>${role}</td>
+                <td>
+                    <button class="action-btn" onclick="editRole(${index})">Editar</button>
+                    <button class="delete-btn" onclick="deleteRole(${index})">Eliminar</button>
+                </td>
+            </tr>`;
+            tableBody.innerHTML += row;
+        });
+    }
+
+    // Función para agregar un nuevo rol
+    document.getElementById('addRoleButton').addEventListener('click', function() {
+        const newRole = document.getElementById('newRole').value.trim();
+        if (newRole) {
+            roles.push(newRole);
+            document.getElementById('newRole').value = ''; // Limpiar el input
+            renderRolesTable();
+        } else {
+            alert('Por favor, ingresa un nombre de rol válido.');
+        }
+    });
+
+    // Función para eliminar un rol
+    function deleteRole(index) {
+        roles.splice(index, 1);
+        renderRolesTable();
+    }
+
+    // Función para editar un rol
+    function editRole(index) {
+        const newRoleName = prompt('Edita el nombre del rol:', roles[index]);
+        if (newRoleName && newRoleName.trim()) {
+            roles[index] = newRoleName.trim();
+            renderRolesTable();
+        } else {
+            alert('Por favor, ingresa un nombre de rol válido.');
+        }
+    }
+
+    // Renderizar la tabla al cargar la página
+    renderRolesTable();
+</script>
+
+</body>
+</html>

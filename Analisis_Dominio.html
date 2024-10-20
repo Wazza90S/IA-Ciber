@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Análisis de dominio</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 50px;
+            background-color: #f4f4f4;
+        }
+        h1 {
+            color: #333;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        input, button {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            font-size: 16px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .response-box {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            min-height: 100px;
+        }
+        .navbar {
+            display: flex;
+            justify-content: space-around;
+            background-color: #333;
+            padding: 14px 0;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            padding: 14px 20px;
+            text-align: center;
+            font-size: 18px;
+            transition: background-color 0.3s;
+        }
+        .navbar a:hover {
+            background-color: #575757;
+            border-radius: 4px;
+        }
+        footer {
+            margin-top: 30px;
+            text-align: center;
+            padding: 20px;
+            background-color: #333;
+            color: white;
+            border-radius: 8px;
+        }
+        footer img {
+            width: 24px;
+            height: 24px;
+            margin-right: 15px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="navbar">
+    <a href="#analisis-dominio">Análisis de dominio</a>
+    <a href="#analisis-vulnerabilidades">Análisis de vulnerabilidades</a>
+    <a href="#reportes">Reportes</a>
+    <a href="#roles">Roles</a>
+    <a href="#cvs">CVS's</a>
+</div>
+
+<div class="container">
+    <h1>Análisis de dominio</h1>
+    <input type="text" id="domainInput" placeholder="Ingresa el dominio aquí...">
+    <button id="analyzeButton">Enviar</button>
+
+    <div class="response-box" id="responseBox">
+        Los resultados aparecerán aquí...
+    </div>
+</div>
+
+<footer>
+    <p>Desarrollada por Ranma Saotome</p>
+    <a href="https://www.instagram.com" target="_blank">
+        <img src="/img/instagram.ico" alt="Instagram">
+    </a>
+    <a href="https://www.x.com" target="_blank">
+        <img src="/img/x.ico" alt="X">
+    </a>
+</footer>
+
+<script>
+    document.getElementById('analyzeButton').addEventListener('click', async function() {
+        const domain = document.getElementById('domainInput').value;
+        const responseBox = document.getElementById('responseBox');
+
+        if (!domain) {
+            responseBox.innerHTML = "Por favor, introduce un dominio.";
+            return;
+        }
+
+        // Llamada a la API de OpenAI para obtener los registros de correo, IPs y subdominios
+        const response = await fetch("https://api.openai.com/v1/chat/completions", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer sk-k4w6aF6U3-_9ZxdQ22L_v-Z5pFw3cH1EKMIl-siNWWT3BlbkFJZkCuI3JsbsgqEI2TVLGuDQ1HsezZ9LiKi5t-_ecDUA` // Reemplaza con tu clave de API
+            },
+            body: JSON.stringify({
+                model: "gpt-3.5-turbo",
+                messages: [{
+                    "role": "user",
+                    "content": `Dame los registros de correo, las IP's relacionadas y los subdominios del dominio: ${domain}`
+                }]
+            })
+        });
+
+        const data = await response.json();
+        const aiResponse = data.choices[0].message.content;
+
+        responseBox.innerHTML = aiResponse;
+    });
+</script>
+
+</body>
+</html>
